@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Zone d'intervention - VB Assistance administrative</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+/* ============================= */
+/* PAGE ZONE D'INTERVENTION      */
+/* ============================= */
+
+html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    background: #f1e9d9;
+}
+
+/* CONTENU PRINCIPAL */
+
+main.zone-vb {
+    background: #f1e9d9;
+    width: 100%;
+    max-width: none;
+    min-height: 0;
+    height: auto;
+    flex: 1 0 auto;
+    margin: 0;
+    padding: 18px 25px 16px;
+    box-sizing: border-box;
+}
+
+/* TITRE */
+
+.zone-vb h1 {
+    text-align: center;
+    font-family: Georgia, serif;
+    color: #9c7135;
+    font-size: 30px;
+    margin: 0 0 8px;
+}
+
+.zone-introduction {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    color: #444;
+    margin: 0 0 22px;
+    line-height: 1.5;
+}
+
+/* DEUX COLONNES */
+
+.zone-grille {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+    max-width: 1150px;
+    margin: 0 auto;
+    align-items: stretch;
+}
+
+/* ENCADRÉS */
+
+.zone-cadre {
+    background: #ffffff;
+    border: 1px solid #c79a54;
+    border-radius: 16px;
+    padding: 22px 25px;
+    box-sizing: border-box;
+    min-width: 0;
+    height: 100%;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.04);
+}
+
+/* ICÔNES DORÉES */
+
+.zone-icone {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #f5ecdd;
+    color: #a67836;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px;
+}
+
+.zone-icone svg {
+    width: 26px;
+    height: 26px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* TITRES DES CARTES */
+
+.zone-cadre h2 {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: #a67836;
+    font-size: 21px;
+    margin: 0 0 12px;
+    font-weight: bold;
+}
+
+.zone-separateur {
+    width: 65px;
+    height: 2px;
+    background: #c79a54;
+    margin: 0 auto 17px;
+}
+
+/* TEXTES */
+
+.zone-cadre p {
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    color: #222;
+    margin: 0 0 12px;
+}
+
+/* VÉRIFICATION COMMUNE */
+
+.recherche-ville {
+    margin-top: 20px;
+    padding: 16px;
+    background: #faf6ef;
+    border: 1px solid #ead8b9;
+    border-radius: 10px;
+}
+
+.recherche-ville p {
+    font-size: 15px;
+    margin-bottom: 12px;
+}
+
+.recherche-ville strong {
+    color: #222;
+}
+
+.recherche-champs {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#ville-client {
+    flex: 1 1 150px;
+    min-width: 0;
+    padding: 10px;
+    border: 1px solid #c79a54;
+    border-radius: 6px;
+    background: white;
+    color: #222;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+#verifier-ville {
+    padding: 10px 14px;
+    border: none;
+    border-radius: 6px;
+    background: #a67836;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#verifier-ville:hover {
+    background: #875d25;
+}
+
+#resultat-ville {
+    margin: 10px 0 0;
+    font-size: 14px;
+    font-weight: bold;
+    color: #8d632a;
+}
+
+#resultat-ville:empty {
+    display: none;
+}
+
+/* COMMUNICATION */
+
+.zone-communication {
+    margin-top: 22px;
+    padding-top: 15px;
+    border-top: 1px solid #ead8b9;
+}
+
+.zone-communication h3 {
+    text-align: center;
+    color: #a67836;
+    font-family: Georgia, serif;
+    font-size: 17px;
+    font-style: italic;
+    margin: 0 0 18px;
+}
+
+.moyens-communication {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 35px;
+    flex-wrap: wrap;
+}
+
+.moyen {
+    text-align: center;
+    width: 75px;
+}
+
+.moyen svg {
+    width: 44px;
+    height: 44px;
+}
+
+.zone-cadre .moyen p {
+    font-size: 13px;
+    margin: 5px 0 0;
+}
+
+.zone-cadre .precision {
+    text-align: center;
+    font-size: 13px;
+    font-style: italic;
+    color: #9c7135;
+    margin: 18px 0 0;
+}
+
+/* FOOTER */
+
+footer.footer-zone-intervention {
+    background: #222;
+    color: white;
+    width: 100%;
+    flex-shrink: 0;
+    min-height: 0;
+    height: auto;
+    margin: 0;
+    padding: 16px 20px 13px;
+    box-sizing: border-box;
+    text-align: center;
+    position: static;
+}
+
+.coordonnees-zone-intervention {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 9px;
+    font-size: 13px;
+    margin-bottom: 13px;
+    color: white;
+}
+
+.footer-zone-intervention .liens-legaux {
+    border-top: 1px solid #c79a54;
+    padding-top: 12px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    color: #c79a54;
+    font-size: 13px;
+}
+
+.footer-zone-intervention .liens-legaux a {
+    color: #c79a54;
+    text-decoration: none;
+}
+
+.footer-zone-intervention .liens-legaux a:hover {
+    text-decoration: underline;
+}
+
+/* ÉCRANS MOINS HAUTS */
+
+@media (min-width: 751px) and (max-height: 850px) {
+
+    main.zone-vb {
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+
+    .zone-vb h1 {
+        font-size: 27px;
+    }
+
+    .zone-introduction {
+        margin-bottom: 14px;
+    }
+
+    .zone-cadre {
+        padding: 16px 20px;
+    }
+
+    .zone-cadre p {
+        font-size: 14px;
+        margin-bottom: 9px;
+    }
+
+    .zone-icone {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 7px;
+    }
+
+    .zone-separateur {
+        margin-bottom: 12px;
+    }
+
+    .recherche-ville {
+        margin-top: 12px;
+        padding: 12px;
+    }
+
+    .zone-communication {
+        margin-top: 12px;
+        padding-top: 12px;
+    }
+
+    .moyens-communication {
+        gap: 25px;
+    }
+
+    .moyen svg {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+/* VERSION MOBILE */
+
+@media (max-width: 750px) {
+
+    main.zone-vb {
+        padding: 22px 15px;
+    }
+
+    .zone-vb h1 {
+        font-size: 27px;
+    }
+
+    .zone-introduction {
+        font-size: 14px;
+    }
+
+    .zone-grille {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .zone-cadre {
+        padding: 20px 16px;
+    }
+
+    .zone-cadre p {
+        font-size: 14px;
+    }
+
+    .recherche-champs {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #ville-client {
+        flex: none;
+        width: 100%;
+    }
+
+    #verifier-ville {
+        width: 100%;
+    }
+
+    .moyens-communication {
+        gap: 18px;
+    }
+
+    .coordonnees-zone-intervention,
+    .footer-zone-intervention .liens-legaux {
+        font-size: 12px;
+        gap: 7px;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- EN-TÊTE ORIGINAL CONSERVÉ -->
+
+<header>
+
+    <img
+        src="logo-vb-soleil-recadre.png"
+        alt="Logo VB"
+        class="logo-vb"
+        style="width:165px; height:auto; position:absolute; top:-10px; left:20px;"
+    >
+
+    <p>Assistance administrative</p>
+
+    <nav>
+        <a href="index.html">Accueil</a>
+        <a href="apropos.html">À propos</a>
+        <a href="pourquoi.html">Pourquoi ?</a>
+        <a href="prestations.html">Prestations</a>
+        <a href="abonnements.html">Abonnements</a>
+        <a href="zone-intervention.html">Zone d'intervention</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+</header>
+
+
+<!-- ZONE D'INTERVENTION -->
+
+<main class="zone-vb">
+
+    <h1>Zone d'intervention</h1>
+
+    <p class="zone-introduction">
+        Un accompagnement administratif de proximité
+        ou à distance, adapté à vos besoins.
+    </p>
+
+
+    <div class="zone-grille">
+
+        <!-- EN PRÉSENTIEL -->
+
+        <section class="zone-cadre">
+
+            <div class="zone-icone">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/>
+                    <circle cx="12" cy="10" r="2.5"/>
+                </svg>
+            </div>
+
+            <h2>EN PRÉSENTIEL</h2>
+
+            <div class="zone-separateur"></div>
+
+            <p>
+                Intervention possible dans un rayon de
+                <strong>15 km autour de Bornel (60)</strong>,
+                si nécessaire.
+            </p>
+
+            <p>
+                Accompagnement également possible en
+                visioconférence et par téléphone.
+            </p>
+
+
+            <!-- VÉRIFICATION COMMUNE -->
+            <!-- IDENTIFIANTS D'ORIGINE CONSERVÉS -->
+
+            <div class="recherche-ville">
+
+                <p>
+                    <strong>
+                        Votre commune est-elle dans
+                        ma zone d'intervention ?
+                    </strong>
+                </p>
+
+                <div class="recherche-champs">
+
+                    <input
+                        type="text"
+                        id="ville-client"
+                        placeholder="Entrez votre commune"
+                        aria-label="Nom de votre commune"
+                    >
+
+                    <button
+                        type="button"
+                        id="verifier-ville"
+                    >
+                        Vérifier ma commune
+                    </button>
+
+                </div>
+
+                <p
+                    id="resultat-ville"
+                    aria-live="polite"
+                ></p>
+
+            </div>
+
+        </section>
+
+
+        <!-- À DISTANCE -->
+
+        <section class="zone-cadre">
+
+            <div class="zone-icone">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3" y="4" width="18" height="13" rx="2"/>
+                    <path d="M8 21h8M12 17v4"/>
+                </svg>
+            </div>
+
+            <h2>À DISTANCE</h2>
+
+            <div class="zone-separateur"></div>
+
+            <p>
+                Pour les professionnels situés
+                au-delà de <strong>15 km de Bornel (60)</strong>.
+            </p>
+
+            <p>
+                Accompagnement en visioconférence
+                et par téléphone.
+            </p>
+
+
+            <!-- MOYENS DE COMMUNICATION -->
+
+            <div class="zone-communication">
+
+                <h3>
+                    Échangeons selon vos préférences
+                </h3>
+
+                <div class="moyens-communication">
+
+                    <!-- TEAMS -->
+
+                    <div class="moyen">
+
+                        <svg viewBox="0 0 65 65"
+                             aria-label="Teams"
+                             role="img">
+
+                            <rect x="14" y="19"
+                                  width="35" height="34"
+                                  rx="7" fill="#6264A7"/>
+
+                            <rect x="4" y="25"
+                                  width="30" height="30"
+                                  rx="5" fill="#464775"/>
+
+                            <text x="19" y="46"
+                                  text-anchor="middle"
+                                  font-family="Arial"
+                                  font-weight="bold"
+                                  font-size="22"
+                                  fill="white">T</text>
+
+                            <circle cx="45" cy="12"
+                                    r="9" fill="#7B83EB"/>
+
+                            <circle cx="58" cy="19"
+                                    r="6" fill="#5059C9"/>
+
+                        </svg>
+
+                        <p>Teams</p>
+
+                    </div>
+
+
+                    <!-- TÉLÉPHONE -->
+
+                    <div class="moyen">
+
+                        <svg viewBox="0 0 65 65"
+                             aria-label="Téléphone"
+                             role="img">
+
+                            <path
+                                d="M19 11 C16 11 13 15 13 20
+                                   C13 37 28 52 45 52
+                                   C50 52 54 49 54 46
+                                   L54 39 L43 34 L38 40
+                                   C31 37 26 32 23 25
+                                   L29 20 L24 11 Z"
+                                fill="none"
+                                stroke="#111"
+                                stroke-width="3.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+
+                        </svg>
+
+                        <p>Téléphone</p>
+
+                    </div>
+
+
+                    <!-- WHATSAPP -->
+
+                    <div class="moyen">
+
+                        <svg viewBox="0 0 65 65"
+                             aria-label="WhatsApp"
+                             role="img">
+
+                            <rect x="3" y="3"
+                                  width="59" height="59"
+                                  rx="15" fill="#25D366"/>
+
+                            <circle cx="32.5" cy="31"
+                                    r="20" fill="none"
+                                    stroke="white"
+                                    stroke-width="4"/>
+
+                            <path d="M18 45 L15 54 L26 50"
+                                  fill="#25D366"
+                                  stroke="white"
+                                  stroke-width="3"/>
+
+                            <path
+                                d="M25 19 C21 24 25 34 32 40
+                                   C39 46 46 43 47 39
+                                   L40 35 L37 39
+                                   C32 36 29 33 27 28
+                                   L30 25 L27 19 Z"
+                                fill="white"
+                            />
+
+                        </svg>
+
+                        <p>WhatsApp</p>
+
+                    </div>
+
+                </div>
+
+                <p class="precision">
+                    Les modalités de communication sont
+                    définies ensemble lors de la mise
+                    en place de votre accompagnement.
+                </p>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer class="footer-zone-intervention">
+
+    <div class="coordonnees-zone-intervention">
+
+        <span>VB - Assistance administrative</span>
+        <span>·</span>
+
+        <span>Bornel (60540)</span>
+        <span>·</span>
+
+        <span>06 11 56 55 47</span>
+        <span>·</span>
+
+        <span>gestion.admin.vbge@gmail.com</span>
+
+    </div>
+
+    <div class="liens-legaux">
+    <a href="faq.html">FAQ</a>
+    <span>·</span>
+
+    <a href="mentions-legales.html">Mentions légales</a>
+    <span>·</span>
+
+    <a href="rgpd.html">RGPD</a>
+    <span>·</span>
+
+    <a href="cookies.html">Cookies</a>
+    <span>·</span>
+
+    <a href="cgv.html">CGV</a>
+</div>
+
+</footer>
+
+
+<!-- VÉRIFICATION DES COMMUNES -->
+<!-- JAVASCRIPT ORIGINAL CONSERVÉ -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", async function () {
+
+    const champ = document.getElementById("ville-client");
+    const bouton = document.getElementById("verifier-ville");
+    const resultat = document.getElementById("resultat-ville");
+
+    const suggestions = document.createElement("datalist");
+    suggestions.id = "liste-communes-vb";
+    champ.after(suggestions);
+    champ.setAttribute("list", suggestions.id);
+
+    let communes = [];
+    let listeChargee = false;
+
+    function normaliser(texte) {
+        return texte
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase()
+            .replace(/[-'’]/g, " ")
+            .replace(/\s+/g, " ")
+            .trim();
+    }
+
+    try {
+        const reponse = await fetch(
+            "./communes_zone_intervention_VB.csv"
+        );
+
+        if (!reponse.ok) {
+            throw new Error("CSV introuvable");
+        }
+
+        const texte = await reponse.text();
+
+        communes = texte
+            .replace(/^\uFEFF/, "")
+            .split(/\r?\n/)
+            .slice(1)
+            .map(ligne => ligne.split(";"))
+            .filter(colonnes =>
+                colonnes.length >= 3 &&
+                normaliser(colonnes[2]) === "oui"
+            )
+            .map(colonnes => colonnes[0].trim());
+
+        suggestions.innerHTML = "";
+
+        communes.forEach(commune => {
+            const option = document.createElement("option");
+            option.value = commune;
+            suggestions.appendChild(option);
+        });
+
+        listeChargee = true;
+
+    } catch (erreur) {
+        resultat.textContent =
+            "Impossible de charger la liste des communes.";
+    }
+
+    function verifier() {
+        if (!listeChargee) {
+            resultat.textContent =
+                "La liste des communes n'est pas disponible.";
+            return;
+        }
+
+        const saisie = normaliser(champ.value);
+
+        if (!saisie) {
+            resultat.textContent = "";
+            return;
+        }
+
+        const communeTrouvee = communes.find(
+            commune => normaliser(commune) === saisie
+        );
+
+        if (communeTrouvee) {
+            resultat.textContent =
+                communeTrouvee +
+                " fait partie de ma zone d'intervention.";
+        } else {
+            resultat.textContent =
+                "Cette commune ne figure pas dans la liste.";
+        }
+    }
+
+    champ.addEventListener("input", verifier);
+    champ.addEventListener("change", verifier);
+    bouton.addEventListener("click", verifier);
+
+});
+
+</script>
+
+</body>
+</html>

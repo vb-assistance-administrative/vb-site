@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Contact - VB Assistance administrative</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+/* ============================= */
+/* PAGE CONTACT                  */
+/* ============================= */
+
+html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    background: #f1e9d9;
+}
+
+/* CONTENU CONTACT */
+
+main.contact-vb {
+    background: #f1e9d9;
+    width: 100%;
+    max-width: none;
+    min-height: 0;
+    height: auto;
+    flex: 1 0 auto;
+    padding: 20px 25px 20px;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* TITRE */
+
+.contact-vb h1 {
+    text-align: center;
+    font-family: Georgia, serif;
+    font-size: 30px;
+    color: #9c7135;
+    margin: 0 0 10px;
+}
+
+/* INTRODUCTION */
+
+.contact-intro {
+    text-align: center;
+    font-size: 16px;
+    line-height: 1.5;
+    max-width: 750px;
+    margin: 0 auto 22px;
+    color: #222;
+}
+
+/* GRAND ENCADRÉ */
+
+.contact-grand-cadre {
+    max-width: 950px;
+    margin: 0 auto;
+    padding: 22px 25px;
+    background: #fffaf3;
+    border: 1.5px solid #c79a54;
+    border-radius: 18px;
+    box-sizing: border-box;
+}
+
+.contact-grand-cadre h2 {
+    text-align: center;
+    font-family: Georgia, serif;
+    color: #a67836;
+    font-size: 23px;
+    margin: 0 0 20px;
+}
+
+/* TROIS CARTES */
+
+.contact-cartes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.contact-carte {
+    background: white;
+    border: 1px solid #c79a54;
+    border-radius: 14px;
+    padding: 18px 12px;
+    text-align: center;
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+/* ICÔNES */
+
+.contact-icone {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto 10px;
+    display: block;
+    color: #a67836;
+}
+
+/* TITRES DES CARTES */
+
+.contact-carte h3 {
+    color: #a67836;
+    font-family: Georgia, serif;
+    font-size: 19px;
+    margin: 0 0 10px;
+}
+
+/* INFORMATIONS */
+
+.contact-carte p {
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.contact-carte a {
+    color: #222;
+    text-decoration: none;
+}
+
+.contact-carte a:hover {
+    color: #a67836;
+    text-decoration: underline;
+}
+
+/* SÉPARATION */
+
+.contact-separation {
+    border: 0;
+    border-top: 1px solid #d8bd91;
+    margin: 22px 0 20px;
+}
+
+/* DEMANDE DE DEVIS */
+
+.contact-devis {
+    text-align: center;
+}
+
+.contact-devis h2 {
+    font-size: 22px;
+    margin-bottom: 12px;
+}
+
+.contact-devis p {
+    font-size: 15px;
+    line-height: 1.5;
+    max-width: 650px;
+    margin: 0 auto 18px;
+}
+
+/* BOUTON */
+
+.contact-bouton {
+    display: inline-block;
+    background: #b99a61;
+    color: #111;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 12px 24px;
+    border-radius: 30px;
+    transition: background 0.2s;
+}
+
+.contact-bouton:hover {
+    background: #a98549;
+}
+
+/* PETITE NOTE */
+
+.contact-note {
+    color: #80643d;
+    font-style: italic;
+    font-size: 13px !important;
+    margin: 15px 0 0 !important;
+}
+
+/* ============================= */
+/* FOOTER AVEC MENTIONS LÉGALES  */
+/* ============================= */
+
+footer.footer-contact {
+    background: #222;
+    color: white;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    flex-shrink: 0;
+    margin: 0;
+    padding: 16px 20px 13px;
+    text-align: center;
+    box-sizing: border-box;
+    position: static;
+}
+
+/* COORDONNÉES SUR UNE LIGNE */
+
+.coordonnees-contact {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 9px;
+    font-size: 13px;
+    margin-bottom: 13px;
+    color: white;
+}
+
+.coordonnees-contact a {
+    color: white;
+    text-decoration: none;
+}
+
+.coordonnees-contact a:hover {
+    color: #c79a54;
+}
+
+/* BARRE DES MENTIONS LÉGALES */
+
+.footer-contact .liens-legaux {
+    border-top: 1px solid #c79a54;
+    padding-top: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    color: #c79a54;
+    font-size: 13px;
+}
+
+.footer-contact .liens-legaux a {
+    color: #c79a54;
+    text-decoration: none;
+}
+
+.footer-contact .liens-legaux a:hover {
+    text-decoration: underline;
+}
+
+/* ÉCRANS MOINS HAUTS */
+
+@media (min-width: 751px) and (max-height: 850px) {
+
+    main.contact-vb {
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+
+    .contact-vb h1 {
+        font-size: 27px;
+    }
+
+    .contact-intro {
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+    .contact-grand-cadre {
+        padding: 17px 22px;
+    }
+
+    .contact-grand-cadre h2 {
+        font-size: 21px;
+        margin-bottom: 14px;
+    }
+
+    .contact-carte {
+        padding: 13px 10px;
+    }
+
+    .contact-icone {
+        width: 34px;
+        height: 34px;
+        margin-bottom: 7px;
+    }
+
+    .contact-carte h3 {
+        font-size: 17px;
+        margin-bottom: 7px;
+    }
+
+    .contact-carte p {
+        font-size: 13px;
+    }
+
+    .contact-separation {
+        margin: 15px 0;
+    }
+
+    .contact-devis p {
+        font-size: 14px;
+        margin-bottom: 13px;
+    }
+
+    .contact-bouton {
+        padding: 10px 20px;
+    }
+
+    .contact-note {
+        margin-top: 10px !important;
+    }
+
+}
+
+/* VERSION MOBILE */
+
+@media (max-width: 750px) {
+
+    main.contact-vb {
+        padding: 25px 15px;
+    }
+
+    .contact-vb h1 {
+        font-size: 28px;
+    }
+
+    .contact-intro {
+        font-size: 15px;
+    }
+
+    .contact-grand-cadre {
+        padding: 20px 15px;
+    }
+
+    .contact-cartes {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .contact-carte {
+        padding: 18px 12px;
+    }
+
+    .contact-devis h2 {
+        font-size: 20px;
+    }
+
+    .coordonnees-contact,
+    .footer-contact .liens-legaux {
+        font-size: 12px;
+        gap: 7px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- EN-TÊTE ORIGINAL -->
+
+<header>
+
+    <img
+        src="logo-vb-soleil-recadre.png"
+        alt="Logo VB"
+        class="logo-vb"
+        style="width:165px; height:auto; position:absolute; top:-10px; left:20px;"
+    >
+
+    <p>Assistance administrative</p>
+
+    <nav>
+        <a href="index.html">Accueil</a>
+        <a href="apropos.html">À propos</a>
+        <a href="pourquoi.html">Pourquoi ?</a>
+        <a href="prestations.html">Prestations</a>
+        <a href="abonnements.html">Abonnements</a>
+        <a href="reservation.html">Réservation</a>
+        <a href="zone-intervention.html">Zone d'intervention</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+</header>
+
+
+<!-- CONTENU CONTACT -->
+
+<main class="contact-vb">
+
+    <h1>Contactez-moi</h1>
+
+    <p class="contact-intro">
+        Une question ou un besoin d'accompagnement administratif ?
+        Échangeons ensemble pour trouver une solution adaptée
+        à votre activité.
+    </p>
+
+
+    <div class="contact-grand-cadre">
+
+        <h2>Mes coordonnées</h2>
+
+        <div class="contact-cartes">
+
+
+            <!-- TÉLÉPHONE -->
+
+            <div class="contact-carte">
+
+                <svg
+                    class="contact-icone"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                >
+
+                    <path
+                        d="M22 16.92v3a2 2 0 0 1-2.18 2
+                           19.79 19.79 0 0 1-8.63-3.07
+                           19.5 19.5 0 0 1-6-6
+                           19.79 19.79 0 0 1-3.07-8.67
+                           A2 2 0 0 1 4.11 2h3
+                           a2 2 0 0 1 2 1.72
+                           c.12.96.35 1.9.68 2.81
+                           a2 2 0 0 1-.45 2.11L8.09 9.91
+                           a16 16 0 0 0 6 6l1.27-1.27
+                           a2 2 0 0 1 2.11-.45
+                           c.91.33 1.85.56 2.81.68
+                           A2 2 0 0 1 22 16.92z"
+                    />
+
+                </svg>
+
+                <h3>Téléphone</h3>
+
+                <p>
+                    <a href="tel:+33611565547">
+                        06 11 56 55 47
+                    </a>
+                </p>
+
+            </div>
+
+
+            <!-- E-MAIL -->
+
+            <div class="contact-carte">
+
+                <svg
+                    class="contact-icone"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                >
+
+                    <rect
+                        x="2" y="4"
+                        width="20" height="16"
+                        rx="2"
+                    />
+
+                    <path d="m2 6 10 7 10-7"/>
+
+                </svg>
+
+                <h3>E-mail</h3>
+
+                <p>
+                    <a href="mailto:gestion.admin.vbge@gmail.com">
+                        gestion.admin.vbge@gmail.com
+                    </a>
+                </p>
+
+            </div>
+
+
+            <!-- LOCALISATION -->
+
+            <div class="contact-carte">
+
+                <svg
+                    class="contact-icone"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                >
+
+                    <path
+                        d="M20 10c0 5-8 12-8 12S4 15 4 10
+                           a8 8 0 1 1 16 0z"
+                    />
+
+                    <circle cx="12" cy="10" r="2.5"/>
+
+                </svg>
+
+                <h3>Localisation</h3>
+
+                <p>
+                    Bornel (60540)<br>
+                    Oise
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- SÉPARATION -->
+
+        <hr class="contact-separation">
+
+
+        <!-- ACCOMPAGNEMENT -->
+
+        <div class="contact-devis">
+
+            <h2>Un accompagnement sur mesure</h2>
+
+            <p>
+                Vous souhaitez un accompagnement personnalisé ?
+                Échangeons sur vos besoins administratifs
+                afin de trouver une solution adaptée
+                à votre activité.
+            </p>
+
+            <a
+                class="contact-bouton"
+                href="mailto:gestion.admin.vbge@gmail.com?subject=Demande%20de%20devis%20-%20VB%20Sur%20mesure"
+            >
+                Demander un devis personnalisé
+            </a>
+
+            <p class="contact-note">
+                Je vous répondrai dans les meilleurs délais.
+            </p>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- FOOTER AVEC BARRE LÉGALE -->
+
+<footer class="footer-contact">
+
+    <div class="coordonnees-contact">
+
+        <span>VB - Assistance administrative</span>
+        <span>·</span>
+
+        <span>Bornel (60540)</span>
+        <span>·</span>
+
+        <a href="tel:+33611565547">
+            06 11 56 55 47
+        </a>
+
+        <span>·</span>
+
+        <a href="mailto:gestion.admin.vbge@gmail.com">
+            gestion.admin.vbge@gmail.com
+        </a>
+
+    </div>
+
+
+    <!-- BARRE DES MENTIONS LÉGALES -->
+
+    <div class="liens-legaux">
+    <a href="faq.html">FAQ</a>
+    <span>·</span>
+
+    <a href="mentions-legales.html">Mentions légales</a>
+    <span>·</span>
+
+    <a href="rgpd.html">RGPD</a>
+    <span>·</span>
+
+    <a href="cookies.html">Cookies</a>
+    <span>·</span>
+
+    <a href="cgv.html">CGV</a>
+</div>
+
+</footer>
+
+</body>
+</html>

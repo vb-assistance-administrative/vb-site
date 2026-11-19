@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inscription - VB Assistance administrative</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .page-inscription { max-width: 1000px; margin: 0 auto; padding: 45px 22px 75px; }
+    .page-inscription h1 { font-family: Georgia,serif; color: #9B783D; text-align: center; font-size: 36px; margin: 0 0 12px; }
+    .intro-inscription { text-align: center; margin: 0 0 30px; }
+    .bloc-inscription { background: #FFF9F0; border: 1px solid #B89A62; border-radius: 20px; padding: 25px; margin-bottom: 22px; }
+    .bloc-inscription h2 { font-family: Georgia,serif; color: #9B783D; font-size: 23px; margin: 0 0 18px; }
+    .resume-inscription { line-height: 1.9; }
+    .champs-inscription { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px; }
+    .champ-inscription { display: flex; flex-direction: column; gap: 6px; }
+    .champ-inscription label { font-weight: bold; font-size: 14px; }
+    .champ-inscription input, .champ-inscription textarea { width: 100%; padding: 12px; border: 1px solid #B89A62; border-radius: 9px; font: inherit; background: white; color: #222; }
+    .champ-inscription textarea { min-height: 80px; resize: vertical; }
+    .largeur-complete { grid-column: 1 / -1; }
+    .bouton-inscription { display: block; margin: 20px auto 0; border: 0; border-radius: 30px; background: #B89A62; color: #222; font-weight: bold; font-size: 16px; padding: 15px 28px; cursor: pointer; }
+    .bouton-inscription:hover { background: #D4B77C; }
+    .note-inscription { text-align: center; font-size: 13px; color: #555; margin-top: 16px; }
+    @media(max-width:650px) { .champs-inscription { grid-template-columns: 1fr; } .page-inscription h1 { font-size: 29px; } .bloc-inscription { padding: 18px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo-vb-soleil-recadre.png" alt="Logo VB" class="logo-vb" style="width:165px;height:auto;position:absolute;top:-10px;left:20px;">
+    <p>Assistance administrative</p>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="apropos.html">À propos</a>
+      <a href="pourquoi.html">Pourquoi ?</a>
+      <a href="prestations.html">Prestations</a>
+      <a href="abonnements.html">Abonnements</a>
+      <a href="reservation.html">Réservation</a>
+      <a href="zone-intervention.html">Zone d'intervention</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+  <main class="page-inscription">
+    <h1>Votre inscription</h1>
+    <p class="intro-inscription">Complétez vos informations pour préparer votre contrat d'abonnement.</p>
+    <section class="bloc-inscription" style="text-align:left;margin-bottom:22px;">
+      <h2>Votre choix</h2>
+      <div class="resume-inscription">
+        <div><strong>Abonnement :</strong> <span id="formuleAffichee">Non renseigné</span></div>
+        <div><strong>Créneau :</strong> <span id="creneauAffiche">Non renseigné</span></div>
+      </div>
+    </section>
+    <form id="formulaireInscription">
+      <section class="bloc-inscription" style="text-align:left;margin-bottom:22px;">
+        <h2>Vos coordonnées</h2>
+        <div class="champs-inscription">
+          <div class="champ-inscription"><label for="prenom">Prénom *</label><input id="prenom" name="prenom" autocomplete="given-name" required></div>
+          <div class="champ-inscription"><label for="nom">Nom *</label><input id="nom" name="nom" autocomplete="family-name" required></div>
+          <div class="champ-inscription"><label for="email">Adresse e-mail professionnelle *</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+          <div class="champ-inscription"><label for="telephone">Téléphone *</label><input id="telephone" name="telephone" type="tel" autocomplete="tel" required></div>
+        </div>
+      </section>
+      <section class="bloc-inscription" style="text-align:left;margin-bottom:22px;">
+        <h2>Votre entreprise</h2>
+        <div class="champs-inscription">
+          <div class="champ-inscription largeur-complete"><label for="entreprise">Nom de l'entreprise *</label><input id="entreprise" name="entreprise" autocomplete="organization" required></div>
+          <div class="champ-inscription"><label for="siret">Numéro SIRET (14 chiffres) *</label><input id="siret" name="siret" inputmode="numeric" pattern="[0-9]{14}" maxlength="14" title="Saisissez les 14 chiffres du SIRET" required></div>
+          <div class="champ-inscription"><label for="adresse">Adresse professionnelle *</label><input id="adresse" name="adresse" autocomplete="street-address" required></div>
+          <div class="champ-inscription"><label for="codepostal">Code postal *</label><input id="codepostal" name="codepostal" autocomplete="postal-code" required></div>
+          <div class="champ-inscription"><label for="ville">Ville *</label><input id="ville" name="ville" autocomplete="address-level2" required></div>
+          <div class="champ-inscription largeur-complete"><label for="precisions">Précisions éventuelles (facultatif)</label><textarea id="precisions" name="precisions"></textarea></div>
+        </div>
+      </section>
+      <div style="max-width:750px; margin:20px auto 10px; text-align:left; font-size:14px; line-height:1.6;">
+  <label for="lecture-rgpd" style="display:flex; align-items:flex-start; gap:10px; cursor:pointer;">
+    <input
+      type="checkbox"
+      id="lecture-rgpd"
+      name="lecture_rgpd"
+      required
+      style="margin-top:5px; flex-shrink:0;"
+    >
+    <span>
+      J'ai pris connaissance de la
+      <a href="rgpd.html" target="_blank" rel="noopener noreferrer">
+        politique de confidentialité
+      </a>
+      concernant l'utilisation de mes données personnelles.
+    </span>
+  </label>
+</div>
+
+<button class="bouton-inscription" type="submit">Continuer vers mon contrat</button>
+      <p class="note-inscription">
+  * Champs obligatoires. Les informations saisies sont
+  utilisées pour traiter votre demande d'abonnement.
+  L'envoi du formulaire ne vaut pas confirmation
+  définitive de votre réservation.
+</p>
+    </form>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="supabase-config.js"></script>
+  <script>
+    const parametres = new URLSearchParams(window.location.search);
+    const formules = {
+      'VB Initial': 'VB Initial — 420 € / mois, 3 mois',
+      'VB Evolution': 'VB Évolution — 400 € / mois, 6 mois',
+      'VB Évolution': 'VB Évolution — 400 € / mois, 6 mois',
+      'VB Partenaire': 'VB Partenaire — 380 € / mois, 12 mois'
+    };
+    const formule = parametres.get('formule');
+    document.getElementById('formuleAffichee').textContent = formules[formule] || 'Non renseigné';
+    const jour = parametres.get('jour');
+    const horaire = parametres.get('horaire');
+    document.getElementById('creneauAffiche').textContent = jour && horaire ? jour + ' de ' + horaire.replace(' - ', ' à ') : 'Non renseigné';
+    document.getElementById('formulaireInscription').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  if (!formules[formule] || !jour || !horaire) {
+    alert("Veuillez d'abord choisir une formule et un créneau.");
+    return;
+  }
+
+  const durees = {
+    'VB Initial': 3,
+    'VB Evolution': 6,
+    'VB Évolution': 6,
+    'VB Partenaire': 12
+  };
+
+  const prenom = document.getElementById('prenom').value.trim();
+  const nom = document.getElementById('nom').value.trim();
+  const bouton = this.querySelector('button[type="submit"]');
+
+  bouton.disabled = true;
+  bouton.textContent = 'Envoi en cours...';
+
+  try {
+    const clientSupabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    const { error } = await clientSupabase.rpc('creer_demande_reservation', {
+  p_nom_client: prenom + ' ' + nom,
+  p_formule: formule,
+  p_jour: jour,
+  p_horaire: horaire,
+  p_duree_mois: durees[formule],
+  p_prenom: prenom,
+  p_email: document.getElementById('email').value.trim(),
+  p_telephone: document.getElementById('telephone').value.trim(),
+  p_entreprise: document.getElementById('entreprise').value.trim(),
+  p_siret: document.getElementById('siret').value.trim(),
+  p_adresse: document.getElementById('adresse').value.trim(),
+  p_codepostal: document.getElementById('codepostal').value.trim(),
+  p_ville: document.getElementById('ville').value.trim(),
+  p_precisions: document.getElementById('precisions').value.trim()
+});
+
+    if (error) throw error;
+
+    alert("Votre demande a été enregistrée. Elle reste en attente de validation.");
+  } catch (erreur) {
+    console.error("Erreur de réservation :", erreur);
+    alert("Impossible d'enregistrer la demande pour le moment.");
+  } finally {
+    bouton.disabled = false;
+    bouton.textContent = 'Continuer vers mon contrat';
+  }
+});
+  </script>
+</body>
+</html>

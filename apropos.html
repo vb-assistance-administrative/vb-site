@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À propos - VB Assistance administrative</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Nouvelle présentation À propos : styles limités à cette page */
+        body:has(.apropos-vb-nouveau) {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+        body:has(.apropos-vb-nouveau) > header { flex-shrink: 0; }
+        .apropos-vb-nouveau {
+            box-sizing: border-box;
+            flex: 1 0 auto;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: clamp(26px, 5vh, 58px) clamp(22px, 5vw, 76px);
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: clamp(32px, 6vw, 100px);
+            align-items: start;
+            background: transparent;
+            min-height: 0;
+            height: auto;
+            overflow: visible;
+            transform: none;
+            animation: none;
+        }
+        .apropos-vb-nouveau, .apropos-vb-nouveau * { box-sizing: border-box; }
+        .apropos-vb-nouveau .apropos-introduction {
+            text-align: left !important;
+        }
+        .apropos-vb-nouveau .apropos-titre {
+            margin: 0 0 16px;
+            color: #33271f;
+            font-family: Georgia, 'Times New Roman', serif;
+           font-size: 42px;
+            font-weight: 600;
+            line-height: 1.14;
+            letter-spacing: -0.02em;
+        }
+        .apropos-vb-nouveau .apropos-sous-titre {
+            margin: 0 0 23px;
+            color: #a47b38;
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: clamp(25px, 2.3vw, 35px);
+            font-weight: 600;
+            font-style: italic;
+            line-height: 1.2;
+        }
+        .apropos-vb-nouveau .apropos-accroche {
+            max-width: 410px;
+            margin: 0;
+            color: #60554b;
+            font-size: clamp(16px, 1.3vw, 19px);
+            line-height: 1.55;
+        }
+        .apropos-vb-nouveau .apropos-texte {
+            width: 100%;
+            max-width: 650px;
+            text-align: left !important;
+            justify-self: start;
+        }
+        .apropos-vb-nouveau .apropos-texte p {
+            text-align: left !important;
+            text-indent: 0 !important;
+            max-width: 100%;
+            white-space: normal !important;
+            margin: 0 0 24px !important;
+            color: #342e29;
+            font-size: clamp(15px, 1.12vw, 17px);
+            line-height: 1.65;
+            font-weight: 400;
+        }
+        .apropos-vb-nouveau .apropos-texte p:last-child { margin-bottom: 0; }
+        body:has(.apropos-vb-nouveau) .footer-apropos {
+            flex-shrink: 0;
+            display: block !important;
+            width: 100%;
+            height: auto !important;
+            min-height: 0 !important;
+            padding: 7px 12px !important;
+            text-align: center;
+        }
+        body:has(.apropos-vb-nouveau) .coordonnees-apropos,
+        body:has(.apropos-vb-nouveau) .footer-apropos .liens-legaux {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 5px 10px;
+            font-size: 12px;
+        }
+        body:has(.apropos-vb-nouveau) .coordonnees-apropos { color: white; }
+        body:has(.apropos-vb-nouveau) .footer-apropos .liens-legaux {
+            width: 100%;
+            margin: 5px 0 0 !important;
+            padding: 5px 0 0 !important;
+        }
+        @media (max-width: 780px) {
+            .apropos-vb-nouveau {
+                grid-template-columns: 1fr;
+                gap: 24px;
+                padding: 28px 22px 40px;
+            }
+            .apropos-vb-nouveau .apropos-titre { font-size: clamp(29px, 7vw, 40px); }
+            .apropos-vb-nouveau .apropos-sous-titre { font-size: clamp(24px, 6vw, 31px); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="logo-vb-soleil-recadre.png" alt="Logo VB" class="logo-vb" style="width: 165px; height: auto; position: absolute; top: -10px; left: 20px;">
+        <p>Assistance administrative</p>
+        <nav>
+            <a href="index.html">Accueil</a>
+            <a href="apropos.html">À propos</a>
+            <a href="pourquoi.html">Pourquoi ?</a>
+            <a href="prestations.html">Prestations</a>
+            <a href="abonnements.html">Abonnements</a>
+            <a href="zone-intervention.html">Zone d'intervention</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <main class="apropos-vb-nouveau">
+        <section class="apropos-introduction" aria-label="Présentation de VB">
+            <h1 class="apropos-titre">Derrière VB,<br>une expérience de terrain.</h1>
+            <h2 class="apropos-sous-titre">Et avant tout, une écoute.</h2>
+            <p class="apropos-accroche">Assistance administrative indépendante, au service des professionnels et de leurs besoins.</p>
+        </section>
+
+        <section class="apropos-texte" aria-label="Mon parcours et ma vision">
+            <p>Pendant plus de vingt ans, j'ai évolué dans l'administration, la planification et la coordination des équipes. Mon parcours s'est ensuite enrichi d'expériences dans la supply chain et le recrutement, ainsi que de l'obtention d'un titre professionnel d'assistante ressources humaines.</p>
+            <p>Au fil de ces expériences, j'ai appris que le travail administratif ne se résume pas à des dossiers, des chiffres ou des plannings. Il repose aussi sur les relations humaines.</p>
+            <p>Mes échanges avec les équipes m'ont appris à écouter, à comprendre les difficultés rencontrées et à faire le lien entre les personnes et les différents services.</p>
+            <p>Aujourd'hui, cette expérience guide ma façon de travailler. Avant toute chose, je privilégie le dialogue pour comprendre votre activité, vos besoins et vos priorités.</p>
+            <p>Je souhaite vous apporter une aide concrète, dans un climat de confiance, de respect et de discrétion, tout en m'adaptant à votre manière de fonctionner.</p>
+        </section>
+    </main>
+
+    <footer class="footer-apropos">
+    <div class="coordonnees-apropos">
+        <span>VB - Assistance administrative</span>
+        <span>·</span>
+        <span>Bornel (60540)</span>
+        <span>·</span>
+        <span>06 11 56 55 47</span>
+        <span>·</span>
+        <span>gestion.admin.vbge@gmail.com</span>
+    </div>
+
+    <div class="liens-legaux">
+        <a href="faq.html">FAQ</a>
+        <span>·</span>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <span>·</span>
+        <a href="rgpd.html">RGPD</a>
+        <span>·</span>
+        <a href="cookies.html">Cookies</a>
+        <span>·</span>
+        <a href="cgv.html">CGV</a>
+    </div>
+</footer>
+</body>
+</html>

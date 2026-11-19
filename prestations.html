@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prestations - VB Assistance administrative</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Présentation sobre : règles limitées à cette page. */
+        body:has(.page-prestations) {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+        body:has(.page-prestations) > header { flex: 0 0 auto; }
+        body:has(.page-prestations) .page-prestations {
+            flex: 1 0 auto;
+            width: 100%;
+            max-width: 1800px;
+            padding: 22px 20px 28px;
+            margin: 0 auto;
+        }
+        body:has(.page-prestations) .intro-prestations {
+            width: 100%;
+            max-width: 1150px;
+            margin: 0 auto 38px;
+            padding: 0 10px;
+            text-align: center;
+            white-space: normal !important;
+            animation: none !important;
+            transform: none !important;
+            font: italic bold 18px/1.45 Georgia, serif;
+        }
+        body:has(.page-prestations) .grille-prestations {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+            align-items: stretch;
+            margin: 0;
+        }
+        body:has(.page-prestations) .cadre-prestation,
+        body:has(.page-prestations) .cadre-prestation.gestion,
+        body:has(.page-prestations) .cadre-prestation.facturation,
+        body:has(.page-prestations) .cadre-prestation.relation,
+        body:has(.page-prestations) .cadre-prestation.planification {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            padding: 25px 20px 22px;
+            background: #fffaf2 !important;
+            border: 1px solid #b89a62;
+            border-radius: 18px;
+            box-shadow: 0 4px 12px rgba(0,0,0,.07);
+            color: #222;
+            text-align: left;
+        }
+        body:has(.page-prestations) .cadre-prestation h2 {
+            margin: 0 0 24px;
+            padding: 0;
+            min-height: 56px;
+            font: bold 21px/1.25 Georgia, serif;
+            text-align: center;
+            color: #9b783d;
+        }
+        body:has(.page-prestations) .cadre-prestation ul {
+            padding-left: 18px;
+            margin: 0 0 24px;
+        }
+        body:has(.page-prestations) .cadre-prestation li {
+            margin: 0 0 16px;
+            font: 600 14px/1.5 Arial, sans-serif;
+        }
+        body:has(.page-prestations) .cadre-prestation li::marker { color: #b89a62; }
+        body:has(.page-prestations) .bouton-details {
+            display: block;
+            width: 100%;
+            margin-top: auto;
+            padding: 12px 10px;
+            border: 1px solid #a8874d;
+            border-radius: 9px;
+            background: #b89a62;
+            color: #222;
+            font: bold 14px Arial, sans-serif;
+            cursor: pointer;
+        }
+        body:has(.page-prestations) .bouton-details:hover,
+        body:has(.page-prestations) .bouton-details:focus-visible {
+            background: #d7bd8b;
+            outline-offset: 3px;
+        }
+        body:has(.page-prestations) .footer-prestations {
+            flex: 0 0 auto;
+            width: 100%;
+            padding: 7px 12px !important;
+            margin: 0;
+            background: #222;
+            text-align: center;
+        }
+        body:has(.page-prestations) .coordonnees-prestations,
+        body:has(.page-prestations) .footer-prestations .liens-legaux {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 5px 10px;
+            font-size: 12px;
+        }
+        body:has(.page-prestations) .coordonnees-prestations { color: #fff; }
+        body:has(.page-prestations) .footer-prestations .liens-legaux {
+            margin: 5px 0 0 !important;
+            padding: 5px 0 0 !important;
+            border-top: 1px solid #c8a059;
+        }
+        body:has(.page-prestations) .footer-prestations .liens-legaux a,
+        body:has(.page-prestations) .footer-prestations .liens-legaux span { color: #c8a059; }
+        /* Fenêtre des prestations détaillées, sans changement de page. */
+        #fenetre-prestations {
+            width: min(760px, calc(100% - 32px));
+            max-height: min(80vh, 780px);
+            padding: 30px 32px;
+            border: 1px solid #b89a62;
+            border-radius: 18px;
+            background: #fffaf2;
+            color: #222;
+            box-shadow: 0 15px 50px rgba(0,0,0,.25);
+        }
+        #fenetre-prestations::backdrop { background: rgba(0,0,0,.55); }
+        #contenu-dialogue h2 {
+            margin: 0 30px 20px 0;
+            font: bold 25px Georgia, serif;
+            color: #9b783d;
+        }
+        #contenu-dialogue ul { padding-left: 24px; }
+        #contenu-dialogue li { margin-bottom: 13px; line-height: 1.5; }
+        #contenu-dialogue li::marker { color: #b89a62; }
+        #fermer-dialogue {
+            float: right;
+            padding: 5px 11px;
+            border: 1px solid #b89a62;
+            border-radius: 7px;
+            background: #fff;
+            font-size: 22px;
+            cursor: pointer;
+        }
+        @media (min-width: 1200px) and (min-height: 650px) {
+            body:has(.page-prestations) { min-height: 100vh; }
+            body:has(.page-prestations) .page-prestations { flex: 1 1 auto; }
+        }
+        @media (max-width: 1100px) {
+            body:has(.page-prestations) .grille-prestations { grid-template-columns: repeat(2, minmax(0,1fr)); }
+        }
+        @media (max-width: 650px) {
+            body:has(.page-prestations) .page-prestations { padding: 24px 15px; }
+            body:has(.page-prestations) .grille-prestations { grid-template-columns: 1fr; }
+            body:has(.page-prestations) .intro-prestations { font-size: 16px; margin-bottom: 22px; }
+            body:has(.page-prestations) .cadre-prestation h2 { min-height: 0; }
+            #fenetre-prestations { padding: 20px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            body:has(.page-prestations) .cadre-prestation { animation: none; opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+<header>
+<img alt="Logo VB" class="logo-vb" src="logo-vb-soleil-recadre.png" style="width:165px;height:auto;position:absolute;top:-10px;left:20px;"/>
+<p>Assistance administrative</p>
+<nav>
+<a href="index.html">Accueil</a>
+<a href="apropos.html">À propos</a>
+<a href="pourquoi.html">Pourquoi ?</a>
+<a href="prestations.html">Prestations</a>
+<a href="abonnements.html">Abonnements</a>
+<a href="zone-intervention.html">Zone d'intervention</a>
+<a href="contact.html">Contact</a>
+</nav>
+</header>
+<main class="page-prestations">
+    <p class="intro-prestations">Voici un aperçu de ce que je peux faire pour vous. Nous pourrons ensuite échanger ensemble sur vos besoins spécifiques et définir les missions qui vous seront les plus utiles.</p>
+    <div class="tour-prestations">
+        <section class="grille-prestations">
+            <article class="cadre-prestation gestion">
+                <h2>Gestion administrative et RH</h2>
+                <ul class="prestations-apercu">
+                    <li>Création, structuration et mise à jour des dossiers administratifs.</li>
+                    <li>Gestion et mise à jour des dossiers administratifs du personnel.</li>
+                    <li>Gestion des candidatures, tri des CV et présélection des profils.</li>
+                    <li>Organisation et conduite d&#x27;entretiens de recrutement pour des postes opérationnels et administratifs.</li>
+                </ul>
+                <button type="button" class="bouton-details" data-details="details-gestion" aria-haspopup="dialog">Voir toutes les prestations</button>
+                <template id="details-gestion">
+                    <h2 id="titre-dialogue">Gestion administrative et RH</h2>
+                    <ul>
+                <li>Organisation, classement, numérisation et archivage des documents administratifs, papier et numériques.</li>
+                <li>Création, structuration et mise à jour des dossiers administratifs.</li>
+                <li>Gestion des courriers et e-mails professionnels : traitement, préparation des réponses et suivi.</li>
+                <li>Rédaction, mise en forme, relecture et correction de documents professionnels.</li>
+                <li>Saisie, contrôle et actualisation des données et tableaux de suivi sur Excel.</li>
+                <li>Suivi des échéances administratives, des rappels et des dossiers en cours.</li>
+                <li>Gestion et mise à jour des dossiers administratifs du personnel.</li>
+                <li>Suivi administratif des absences, congés et visites médicales.</li>
+                <li>Collecte et transmission des éléments variables de paie au service compétent.</li>
+                <li>Gestion des candidatures, tri des CV et présélection des profils.</li>
+                <li>Organisation et conduite d&#x27;entretiens de recrutement pour des postes opérationnels et administratifs.</li>
+                <li>Préparation et suivi administratif des documents liés au personnel et au recrutement.</li>
+                    </ul>
+                </template>
+            </article>
+            <article class="cadre-prestation facturation">
+                <h2>Devis et factures</h2>
+                <ul class="prestations-apercu">
+                    <li>Préparation, mise en forme et envoi des devis à partir des informations transmises.</li>
+                    <li>Préparation, établissement et envoi des factures à partir des éléments validés.</li>
+                    <li>Suivi des factures émises, des échéances et des règlements communiqués.</li>
+                    <li>Collecte, classement et transmission des pièces justificatives au comptable.</li>
+                </ul>
+                <button type="button" class="bouton-details" data-details="details-facturation" aria-haspopup="dialog">Voir toutes les prestations</button>
+                <template id="details-facturation">
+                    <h2 id="titre-dialogue">Devis et factures</h2>
+                    <ul>
+                <li>Préparation, mise en forme et envoi des devis à partir des informations transmises.</li>
+                <li>Suivi des devis en attente, relances clients selon vos consignes et enregistrement des devis acceptés.</li>
+                <li>Préparation, établissement et envoi des factures à partir des éléments validés.</li>
+                <li>Suivi des factures émises, des échéances et des règlements communiqués.</li>
+                <li>Relances amiables des factures impayées selon vos instructions.</li>
+                <li>Gestion administrative des factures fournisseurs et suivi des échéances de règlement.</li>
+                <li>Collecte, classement et transmission des pièces justificatives au comptable.</li>
+                    </ul>
+                </template>
+            </article>
+            <article class="cadre-prestation relation">
+                <h2>Relation clients et fournisseurs</h2>
+                <ul class="prestations-apercu">
+                    <li>Réception, traitement et suivi administratif des demandes et réclamations clients.</li>
+                    <li>Demandes de devis fournisseurs, comparaison administrative des propositions et préparation des bons de commande après validation.</li>
+                    <li>Enregistrement et suivi des commandes de fournitures et de matériaux.</li>
+                    <li>Création de tableaux de suivi des commandes, livraisons et retards.</li>
+                </ul>
+                <button type="button" class="bouton-details" data-details="details-relation" aria-haspopup="dialog">Voir toutes les prestations</button>
+                <template id="details-relation">
+                    <h2 id="titre-dialogue">Relation clients et fournisseurs</h2>
+                    <ul>
+                <li>Gestion et mise à jour des fichiers clients et fournisseurs.</li>
+                <li>Réception, traitement et suivi administratif des demandes et réclamations clients.</li>
+                <li>Suivi administratif des prestations réalisées et transmission des informations aux interlocuteurs concernés.</li>
+                <li>Demandes de devis fournisseurs, comparaison administrative des propositions et préparation des bons de commande après validation.</li>
+                <li>Enregistrement et suivi des commandes de fournitures et de matériaux.</li>
+                <li>Vérification administrative des bons de livraison et suivi des livraisons.</li>
+                <li>Relances fournisseurs en cas de retard ou d&#x27;anomalie.</li>
+                <li>Création de tableaux de suivi des commandes, livraisons et retards.</li>
+                    </ul>
+                </template>
+            </article>
+            <article class="cadre-prestation planification">
+                <h2>Planification et organisation</h2>
+                <ul class="prestations-apercu">
+                    <li>Élaboration et mise à jour des plannings d&#x27;intervention, de chantier et des équipes.</li>
+                    <li>Ajustement des plannings selon les absences, retards, disponibilités et imprévus.</li>
+                    <li>Organisation et planification des formations obligatoires du personnel selon les disponibilités et les besoins opérationnels.</li>
+                    <li>Suivi des dates de validité et anticipation des renouvellements de formations à partir des informations communiquées.</li>
+                </ul>
+                <button type="button" class="bouton-details" data-details="details-planification" aria-haspopup="dialog">Voir toutes les prestations</button>
+                <template id="details-planification">
+                    <h2 id="titre-dialogue">Planification et organisation</h2>
+                    <ul>
+                <li>Élaboration et mise à jour des plannings d&#x27;intervention, de chantier et des équipes.</li>
+                <li>Ajustement des plannings selon les absences, retards, disponibilités et imprévus.</li>
+                <li>Gestion des agendas professionnels et organisation des priorités.</li>
+                <li>Planification et confirmation des rendez-vous clients et des visites techniques.</li>
+                <li>Organisation administrative des réunions et déplacements professionnels.</li>
+                <li>Coordination des informations entre clients, artisans, équipes et fournisseurs.</li>
+                <li>Création, saisie et contrôle des relevés d&#x27;heures sur Excel.</li>
+                <li>Suivi administratif des effectifs et des besoins en ressources à partir des informations transmises.</li>
+                <li>Organisation et planification des formations obligatoires du personnel selon les disponibilités et les besoins opérationnels.</li>
+                <li>Suivi des dates de validité et anticipation des renouvellements de formations à partir des informations communiquées.</li>
+                    </ul>
+                </template>
+            </article>
+        </section>
+    </div>
+</main>
+<footer class="footer-prestations">
+<div class="coordonnees-prestations">
+<span>VB - Assistance administrative</span><span>·</span><span>Bornel (60540)</span><span>·</span><span>06 11 56 55 47</span><span>·</span><span>gestion.admin.vbge@gmail.com</span>
+</div>
+<div class="liens-legaux">
+    <a href="faq.html">FAQ</a>
+    <span>·</span>
+    <a href="mentions-legales.html">Mentions légales</a>
+    <span>·</span>
+    <a href="rgpd.html">RGPD</a>
+    <span>·</span>
+    <a href="cookies.html">Cookies</a>
+    <span>·</span>
+    <a href="cgv.html">CGV</a>
+</div>
+</footer>
+<dialog id="fenetre-prestations" aria-labelledby="titre-dialogue">
+    <button type="button" id="fermer-dialogue" aria-label="Fermer la fenêtre">×</button>
+    <div id="contenu-dialogue"></div>
+</dialog>
+<script>
+    const fenetre = document.getElementById('fenetre-prestations');
+    const contenu = document.getElementById('contenu-dialogue');
+    let dernierBouton = null;
+    document.querySelectorAll('.bouton-details').forEach((bouton) => {
+        bouton.addEventListener('click', () => {
+            dernierBouton = bouton;
+            contenu.replaceChildren(document.getElementById(bouton.dataset.details).content.cloneNode(true));
+            fenetre.showModal();
+        });
+    });
+    document.getElementById('fermer-dialogue').addEventListener('click', () => fenetre.close());
+    fenetre.addEventListener('close', () => dernierBouton?.focus());
+    fenetre.addEventListener('click', (event) => { if (event.target === fenetre) fenetre.close(); });
+</script>
+</body>
+</html>

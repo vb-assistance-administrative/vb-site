@@ -1,0 +1,102 @@
+
+/* Animation uniquement sur la page d'accueil */
+
+.accueil-vb {
+    position: relative;
+    overflow: hidden;
+}
+
+.accueil-vb .ordinateur-messages {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* Style commun aux deux phrases */
+.accueil-vb .message-ordinateur {
+    position: absolute;
+    margin: 0;
+    font-family: Georgia, serif;
+    font-weight: bold;
+    font-style: italic;
+    color: #e8b96b;
+    text-align: center;
+    line-height: 1.3;
+    text-shadow: 0 1px 2px rgba(0,0,0,.7);
+    opacity: 0;
+    animation-duration: 1.5s;
+    animation-timing-function: cubic-bezier(.2,.75,.25,1);
+    animation-fill-mode: forwards;
+}
+
+/* Première phrase : arrive de la gauche */
+.accueil-vb .message-haut {
+    left: 29%;
+    top: 48%;
+    width: 19%;
+    font-size: 20px;
+    color: #e8b96b;
+    z-index: 10;
+    animation-name: vb-arrive-gauche;
+    animation-delay: .35s;
+}
+
+/* Deuxième phrase : arrive de la droite */
+.accueil-vb .message-bas {
+    left: 38%;
+    top: 73%;
+    width: 17%;
+    font-size: clamp(13px, 1.15vw, 20px);
+    color: #e8b96b;
+    animation-name: vb-arrive-droite;
+    animation-delay: .85s;
+}
+
+/* Animations */
+@keyframes vb-arrive-gauche {
+    from {
+        opacity: 0;
+        transform: translateX(-90px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes vb-arrive-droite {
+    from {
+        opacity: 0;
+        transform: translateX(90px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Adaptation téléphone */
+@media (max-width: 700px) {
+    .accueil-vb .message-haut {
+        left: 20%;
+        top: 57%;
+        width: 35%;
+        font-size: clamp(10px, 2.4vw, 15px);
+    }
+
+    .accueil-vb .message-bas {
+        left: 35%;
+        top: 72%;
+        width: 35%;
+        font-size: clamp(10px, 2.4vw, 15px);
+    }
+}
+
+/* Accessibilité */
+@media (prefers-reduced-motion: reduce) {
+    .accueil-vb .message-ordinateur {
+        animation: none;
+        opacity: 1;
+    }
+}

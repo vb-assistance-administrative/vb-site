@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Réservation - VB Assistance administrative</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .page-reservation{max-width:1150px;margin:0 auto;padding:40px 20px 65px;text-align:center;color:#222}
+    .page-reservation h1{font-family:Georgia,serif;font-size:38px;color:#9B783D;margin:0 0 15px}
+    .intro-reservation{font-family:Georgia,serif;font-style:italic;font-size:18px;line-height:1.6;margin:0 auto 30px;max-width:900px}
+    .criteres-vb{max-width:820px;margin:0 auto 24px;padding:20px;background:#FFF9F0;border:1px solid #B89A62;border-radius:18px;display:flex;justify-content:center;gap:18px;flex-wrap:wrap}
+    .criteres-vb label{display:flex;flex-direction:column;align-items:flex-start;gap:8px;font-weight:bold}
+    .criteres-vb select,.criteres-vb input{padding:12px;border:1px solid #B89A62;border-radius:9px;background:white;font-size:15px;max-width:100%}
+    .etat-disponibilite{min-height:24px;margin:0 auto 20px;color:#654a25}
+    .grille-reservation{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:15px}
+    .jour-reservation{background:#FFF9F0;border:1px solid #B89A62;border-radius:18px;padding:22px 12px}
+    .jour-reservation h2{font-family:Georgia,serif;color:#9B783D;font-size:22px;margin:0 0 20px}
+    .creneau-reservation{display:block;width:100%;padding:14px 5px;margin:12px 0;background:#F1E9DA;border:1px solid #B89A62;border-radius:12px;color:#222;font-size:14px;cursor:pointer}
+    .creneau-reservation:hover:not(:disabled){background:#E5D3B2}
+    .creneau-reservation.selectionne{background:#B89A62;border:2px solid #9B783D;font-weight:bold}
+    .creneau-reservation:disabled{background:#e9e5df;color:#777;cursor:not-allowed}
+    .creneau-reservation.occupe{background:#f4dada;color:#822b2b;border-color:#b98686}
+    .resume-reservation{max-width:600px;margin:35px auto 0;padding:25px;background:#FFF9F0;border:1px solid #B89A62;border-radius:18px}
+    .resume-reservation h2{font-family:Georgia,serif;color:#9B783D;margin-top:0}
+    .bouton-continuer{margin-top:15px;padding:14px 28px;background:#B89A62;border:0;border-radius:30px;color:#222;font-size:16px;font-weight:bold;cursor:pointer}
+    .bouton-continuer:disabled{opacity:.5;cursor:not-allowed}
+    .info-reservation{max-width:800px;margin:22px auto 0;color:#555;font-size:14px;line-height:1.6}
+    @media(max-width:850px){.grille-reservation{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:500px){.grille-reservation{grid-template-columns:1fr}.page-reservation h1{font-size:30px}}
+  </style>
+</head>
+<body>
+<header>
+  <img src="logo-vb-soleil-recadre.png" alt="Logo VB" class="logo-vb" style="width:165px;height:auto;position:absolute;top:-10px;left:20px;">
+  <p>Assistance administrative</p>
+  <nav>
+    <a href="index.html">Accueil</a>
+    <a href="apropos.html">À propos</a>
+    <a href="pourquoi.html">Pourquoi ?</a>
+    <a href="prestations.html">Prestations</a>
+    <a href="abonnements.html">Abonnements</a>
+    <a href="zone-intervention.html">Zone d'intervention</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+<main class="page-reservation">
+  <h1>Réservez votre créneau</h1>
+  <p class="intro-reservation">Choisissez votre formule, votre date de début souhaitée, puis votre créneau hebdomadaire. Votre demande sera étudiée avant confirmation de l'abonnement.</p>
+  <div class="criteres-vb">
+    <label for="formuleReservation">Votre formule
+      <select id="formuleReservation">
+        <option value="">Choisissez une formule</option>
+        <option value="VB Initial" data-mois="3">VB Initial – 3 mois</option>
+        <option value="VB Evolution" data-mois="6">VB Évolution – 6 mois</option>
+        <option value="VB Partenaire" data-mois="12">VB Partenaire – 12 mois</option>
+      </select>
+    </label>
+    <label for="dateReservation">Date de début souhaitée
+      <input id="dateReservation" type="date" required>
+    </label>
+  </div>
+  <p id="etatDisponibilite" class="etat-disponibilite" role="status" aria-live="polite">Choisissez une formule et une date pour afficher les disponibilités.</p>
+  <div class="grille-reservation" id="grilleReservation"></div>
+  <section class="resume-reservation">
+    <h2>Votre créneau sélectionné</h2>
+    <p id="choixReservation">Aucun créneau sélectionné pour le moment.</p>
+    <button type="button" class="bouton-continuer" id="boutonContinuer" disabled>Continuer mon inscription</button>
+  </section>
+  <p class="info-reservation">Chaque créneau correspond à 2 h 30. Chaque abonnement comprend 4 séances par mois contractuel, soit 10 heures au total, sur un créneau hebdomadaire fixe.</p>
+  <p class="info-reservation">Les disponibilités sont indicatives au moment de la consultation. Une demande ne bloque pas le créneau : seule la confirmation par VB, après vérification du contrat et du premier paiement, le réserve. La date de début définitive est fixée par VB.</p>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="supabase-config.js"></script>
+<script>
+  const planning = {
+    "Lundi": ["08:00 - 10:30", "11:30 - 14:00", "15:00 - 17:30"],
+    "Mardi": ["08:00 - 10:30", "11:30 - 14:00", "15:00 - 17:30"],
+    "Mercredi": ["08:00 - 10:30", "11:30 - 14:00", "15:00 - 17:30"],
+    "Jeudi": ["08:00 - 10:30", "11:30 - 14:00"],
+    "Vendredi": ["08:00 - 10:30", "11:30 - 14:00"]
+  };
+  const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const grille = document.getElementById("grilleReservation");
+  const choix = document.getElementById("choixReservation");
+  const continuer = document.getElementById("boutonContinuer");
+  const formule = document.getElementById("formuleReservation");
+  const date = document.getElementById("dateReservation");
+  const etat = document.getElementById("etatDisponibilite");
+  const boutons = [];
+  let creneauChoisi = null;
+  let verification = 0;
+  let disponible = false;
+  function dateLocale(d) {
+    const an = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,'0'), j = String(d.getDate()).padStart(2,'0');
+    return `${an}-${m}-${j}`;
+  }
+  const aujourdhui = new Date();
+  date.min = dateLocale(aujourdhui);
+  const limite = new Date(aujourdhui.getFullYear(),aujourdhui.getMonth(),aujourdhui.getDate()+730);
+  date.max = dateLocale(limite);
+  const paramsInitiaux = new URLSearchParams(location.search);
+  const formuleInitiale = paramsInitiaux.get('formule');
+  if ([...formule.options].some(o => o.value === formuleInitiale)) formule.value = formuleInitiale;
+  function reinitialiserChoix() {
+    creneauChoisi = null;
+    choix.textContent = 'Aucun créneau sélectionné pour le moment.';
+    continuer.disabled = true;
+    boutons.forEach(({bouton}) => bouton.classList.remove('selectionne'));
+  }
+  Object.entries(planning).forEach(([jour, horaires]) => {
+    const colonne = document.createElement('div');
+    colonne.className = 'jour-reservation';
+    const titre = document.createElement('h2');
+    titre.textContent = jour;
+    colonne.appendChild(titre);
+    horaires.forEach(horaire => {
+      const bouton = document.createElement('button');
+      bouton.type = 'button';
+      bouton.className = 'creneau-reservation';
+      bouton.textContent = horaire;
+      bouton.disabled = true;
+      bouton.addEventListener('click', () => {
+        if (bouton.disabled || !disponible) return;
+        reinitialiserChoix();
+        bouton.classList.add('selectionne');
+        creneauChoisi = {jour,horaire};
+        choix.textContent = `${jour} de ${horaire.replace(' - ',' à ')}`;
+        continuer.disabled = false;
+      });
+      boutons.push({jour,horaire,bouton});
+      colonne.appendChild(bouton);
+    });
+    grille.appendChild(colonne);
+  });
+  async function actualiser() {
+    const id = ++verification;
+    disponible = false;
+    reinitialiserChoix();
+    boutons.forEach(({bouton,horaire}) => {bouton.disabled = true; bouton.classList.remove('occupe'); bouton.textContent = horaire;});
+    const mois = Number(formule.selectedOptions[0]?.dataset.mois);
+    if (!mois || !date.value || !date.validity.valid || date.value < date.min || date.value > date.max) {
+      etat.textContent = 'Choisissez une formule et une date valide pour afficher les disponibilités.';
+      return;
+    }
+    etat.textContent = 'Vérification des disponibilités en cours…';
+    try {
+      const {data,error} = await client.rpc('vb_creneaux_indisponibles', {p_date_debut:date.value,p_duree_mois:mois});
+      if (id !== verification) return;
+      if (error) throw error;
+      const occupes = new Set((data || []).map(r => `${r.jour}|${r.horaire}`));
+      boutons.forEach(({jour,horaire,bouton}) => {
+        const occupe = occupes.has(`${jour}|${horaire}`);
+        bouton.disabled = occupe;
+        bouton.classList.toggle('occupe',occupe);
+        bouton.textContent = occupe ? `${horaire} — Indisponible` : horaire;
+      });
+      disponible = true;
+      etat.textContent = 'Créneaux indisponibles pour la période envisagée affichés ci-dessous.';
+    } catch (erreur) {
+      console.error('Disponibilités indisponibles :', erreur);
+      etat.textContent = 'Impossible de vérifier les disponibilités pour le moment. Veuillez réessayer plus tard.';
+    }
+  }
+  formule.addEventListener('change', actualiser);
+  date.addEventListener('change', actualiser);
+  continuer.addEventListener('click', async () => {
+    if (!creneauChoisi || !disponible) return;
+    const choisi = {...creneauChoisi};
+    await actualiser();
+    if (!disponible) return;
+    const bouton = boutons.find(b => b.jour === choisi.jour && b.horaire === choisi.horaire);
+    if (!bouton || bouton.bouton.disabled) {
+      etat.textContent = 'Ce créneau n’est plus disponible. Choisissez-en un autre.';
+      return;
+    }
+    const p = new URLSearchParams(location.search);
+    p.set('formule',formule.value);
+    p.set('jour',choisi.jour);
+    p.set('horaire',choisi.horaire);
+    // Date indicative : inscription.html ne la transmet pas a Supabase.
+    p.set('date_souhaitee',date.value);
+    location.href = 'inscription.html?' + p.toString();
+  });
+  if (formule.value && date.value) actualiser();
+</script>
+</body>
+</html>
