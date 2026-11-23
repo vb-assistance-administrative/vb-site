@@ -100,3 +100,37 @@
         opacity: 1;
     }
 }
+/* VB - Affichage des messages sur téléphone */
+@media (max-width: 600px) {
+
+    .accueil-vb .message-haut {
+        left: 8%;
+        top: 45%;
+        width: 84%;
+        font-size: 17px;
+    }
+
+    .accueil-vb .message-bas {
+        left: 8%;
+        top: 75%;
+        width: 84%;
+        font-size: 17px;
+    }
+
+}
+/* Phrases avec VB visible entre les deux - mobile */
+@media (max-width: 600px) {
+    .accueil-vb .message-haut {
+        left: 1%;
+        top: 50%;
+        width: 65%;
+        font-size: 13px;
+    }
+
+    .accueil-vb .message-bas {
+        left: 12%;
+        top: 65%;
+        width: 60%;
+        font-size: 13px;
+    }
+}

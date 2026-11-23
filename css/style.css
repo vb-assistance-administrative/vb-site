@@ -1027,6 +1027,7 @@ body:has(.accueil-vb) .liens-legaux {
     padding: 5px 0 0 !important;
     font-size: 12px;
 }
+}
 /* CORRECTION PAGE PRESTATIONS UNIQUEMENT */
 
 /* Supprimer le débordement horizontal */
@@ -1084,4 +1085,57 @@ footer {
     z-index: 12;
     pointer-events: auto;
     cursor: pointer;
+}
+/* CORRECTION AFFICHAGE MOBILE VB */
+@media (max-width: 600px) {
+
+    header {
+        padding: 15px 12px 20px;
+    }
+
+    header .logo-vb {
+        position: static !important;
+        display: block;
+        width: 105px !important;
+        height: auto !important;
+        margin: 0 auto 8px;
+    }
+
+    header p {
+        font-size: 17px;
+        margin: 0 0 15px;
+    }
+
+    header nav {
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px 16px;
+    }
+
+    header nav a {
+        font-size: 13px;
+    }
+
+    .hero h2 {
+        font-size: clamp(28px, 9vw, 40px);
+        letter-spacing: 1px;
+        max-width: 100%;
+        overflow-wrap: break-word;
+    }
+
+    .hero {
+        min-height: 65vh;
+        padding: 45px 15px;
+    }
+}
+/* Correction du titre BIENVENUE sur téléphone */
+@media (max-width: 600px) {
+    .accueil-vb.hero h2 {
+        font-size: 32px !important;
+        letter-spacing: 1px !important;
+        -webkit-text-stroke: 0.5px #222222;
+        margin-top: 0;
+        max-width: 100%;
+    }
 }
