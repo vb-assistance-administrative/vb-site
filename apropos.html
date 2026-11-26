@@ -112,6 +112,48 @@
             .apropos-vb-nouveau .apropos-titre { font-size: clamp(29px, 7vw, 40px); }
             .apropos-vb-nouveau .apropos-sous-titre { font-size: clamp(24px, 6vw, 31px); }
         }
+      /* Portrait rond VB */
+.apropos-vb-nouveau .apropos-introduction {
+    position: relative;
+}
+
+.apropos-vb-nouveau .portrait-vb {
+    position: absolute;
+    top: -45px;
+    right: calc(100% + 100px);
+    width: 280px;
+    height: 280px;
+    object-fit: cover;
+    object-position: center 40%;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    filter: grayscale(100%) sepia(35%);
+   opacity: 1;
+    mask-image: radial-gradient(
+        ellipse at center,
+        black 55%,
+        transparent 85%
+    );
+    margin: 0;
+}
+
+@media (max-width: 1600px) {
+    .apropos-vb-nouveau .portrait-vb {
+        position: static;
+        display: block;
+        width: 160px;
+        height: 160px;
+        margin: 0 auto 25px;
+    }
+}
+
+@media (max-width: 780px) {
+    .apropos-vb-nouveau .portrait-vb {
+        width: 140px;
+        height: 140px;
+    }
+}
     </style>
 </head>
 <body>
@@ -134,6 +176,9 @@
             <h1 class="apropos-titre">Derrière VB,<br>une expérience de terrain.</h1>
             <h2 class="apropos-sous-titre">Et avant tout, une écoute.</h2>
             <p class="apropos-accroche">Assistance administrative indépendante, au service des professionnels et de leurs besoins.</p>
+        <img src="portrait-vb.webp" 
+     alt="Portrait de la fondatrice de VB" 
+     class="portrait-vb">
         </section>
 
         <section class="apropos-texte" aria-label="Mon parcours et ma vision">
